@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.sirblobman.combatlogx:api:11.3-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/sirblobman/combatlogx/api/11.3-SNAPSHOT/api-11.3-20230330.035434-2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/sirblobman/combatlogx/api/11.3-SNAPSHOT/api-11.3-20230330.035434-2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/sirblobman/combatlogx/api/11.3-SNAPSHOT/api-11.3-20230330.035434-2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

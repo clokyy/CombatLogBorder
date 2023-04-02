@@ -1,0 +1,4 @@
+name: CombatLogBorder
+version: '${project.version}'
+main: org.clokyy.combatlogborder.CombatLogBorder
+api-version: 1.19
