@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.material.Wood;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -60,11 +61,12 @@ public final class CombatLogBorder extends JavaPlugin implements Listener {
         Player player = event.getPlayer();
 
         RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(player.getWorld()));
-        ProtectedRegion region = regionManager.getRegion("Spawn");
-        if(region != null && region.contains(BlockVector3.at(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ())) && player.hasMetadata("inCombat")){
+        ProtectedRegion SpawnRegion = regionManager.getRegion("Spawn");
+        ProtectedRegion WoodPvpDenyRegion = regionManager.getRegion("wood_pvp_deny");
+        if(SpawnRegion != null && SpawnRegion.contains(BlockVector3.at(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ())) && player.hasMetadata("inCombat")){
             if(!player.hasMetadata("comatTeleported")){
                 
-                Location minLoc = BukkitAdapter.adapt(player.getWorld(), region.getMinimumPoint());
+                Location minLoc = BukkitAdapter.adapt(player.getWorld(), SpawnRegion.getMinimumPoint());
 
                 Location safeLoc = minLoc.clone().add(ThreadLocalRandom.current().nextDouble(-5, 5), 0, ThreadLocalRandom.current().nextDouble(-5, 5));
                 
@@ -74,8 +76,17 @@ public final class CombatLogBorder extends JavaPlugin implements Listener {
                 player.setMetadata("combatTeleported", new FixedMetadataValue(this, true));
             }
 
+        }else if(WoodPvpDenyRegion != null && WoodPvpDenyRegion.contains(BlockVector3.at(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ())) && player.hasMetadata("inCombat")){
+            Location minLoc = BukkitAdapter.adapt(player.getWorld(), WoodPvpDenyRegion.getMinimumPoint());
+
+            Location safeLoc = minLoc.clone().add(ThreadLocalRandom.current().nextDouble(-5, 5), 0, ThreadLocalRandom.current().nextDouble(-5, 5));
+
+            event.setTo(safeLoc);
+
+            player.sendMessage(ChatColor.RED + "You are not allowed to enter HERE while combatlogged");
+            player.setMetadata("combatTeleported", new FixedMetadataValue(this, true));
         }else{
-//            player.removeMetadata("combatTeleported", this);
+//            player.removeMetadata("");
         }
     }
 
